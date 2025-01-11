@@ -4,13 +4,7 @@
 
 #ifndef CACHE_PROJECT_LRUCACHE_H
 #define CACHE_PROJECT_LRUCACHE_H
-
-#endif //CACHE_PROJECT_LRUCACHE_H
-#ifndef LRU_CACHE_H
-#define LRU_CACHE_H
-
 #include <unordered_map>
-
 // LRUCache 类定义
 class LRUCache {
 private:
@@ -43,4 +37,11 @@ public:
     void put(int key, int value);
 };
 
-#endif
+#endif //CACHE_PROJECT_LRUCACHE_H
+
+
+
+
+
+
+

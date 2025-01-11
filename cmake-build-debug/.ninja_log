@@ -1,8 +1,8 @@
 # ninja log v5
-0	579	7581109761437560	CMakeFiles/Cache_Project.dir/LRUCache.cpp.obj	fe41c6fc619f0b18
-67	641	7581109762049885	CMakeFiles/Cache_Project.dir/main.cpp.obj	9f781509535036ee
-641	965	7581109765275591	Cache_Project.exe	803486de3553a0e4
-2	567	7581114065205541	CMakeFiles/Cache_Project.dir/main.cpp.obj	9f781509535036ee
-567	837	7581114067848559	Cache_Project.exe	803486de3553a0e4
-2	582	7581114997420081	CMakeFiles/Cache_Project.dir/main.cpp.obj	9f781509535036ee
-582	828	7581114999852972	Cache_Project.exe	803486de3553a0e4
+182	805	7582716687895169	CMakeFiles/Cache_Project.dir/LRUCache.cpp.obj	fe41c6fc619f0b18
+2	784	7582744057941333	CMakeFiles/Cache_Project.dir/main.cpp.obj	9f781509535036ee
+1	483	7582864619522146	build.ninja	5633c59ead7d6bdf
+786	1103	7582744061124764	Cache_Project.exe	803486de3553a0e4
+116	493	7582716684784123	CMakeFiles/Cache_Project.dir/LRUCache1.cpp.obj	5c576e5e08cada1e
+2	731	7582893749383842	CMakeFiles/Cache_Project.dir/main.cpp.obj	9f781509535036ee
+731	1073	7582893752779162	Cache_Project.exe	803486de3553a0e4
