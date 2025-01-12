@@ -1,7 +1,7 @@
 #ifndef KLRU_K_CACHE_H
 #define KLRU_K_CACHE_H
 
-#include"KLruCache_Test.h"
+#include"KLruCache.h"
 #include <unordered_map>
 #include <memory>
 
@@ -13,7 +13,7 @@ public:
     KLruKCache(int capacity, int historyCapacity, int k)
             : KLruCache<Key, Value>(capacity) // 调用基类构造
             , historyList_(std::make_unique<KLruCache<Key, size_t>>(historyCapacity))
-    , k_(k)
+            , k_(k)
             {}
 
     Value get(Key key)
@@ -34,6 +34,7 @@ public:
         if (KLruCache<Key, Value>::get(key) != "")
             KLruCache<Key, Value>::put(key, value);
 
+
         // 如果数据历史访问次数达到上限，则添加入缓存
         int historyCount = historyList_->get(key);
         historyList_->put(key, ++historyCount);
@@ -46,9 +47,8 @@ public:
             KLruCache<Key, Value>::put(key, value);
         }
     }
-
 private:
-    int                                     k_; // 进入缓存队列的评判标准
+    int k_; // 进入缓存队列的评判标准
     std::unique_ptr<KLruCache<Key, size_t>> historyList_; // 访问数据历史记录(value为访问次数)
 };
 
