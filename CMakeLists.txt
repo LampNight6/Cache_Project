@@ -10,4 +10,5 @@ add_executable(Cache_Project main.cpp
         KLruKCache.h
         KLruCache_Test.h
         KLruKCache_Test.h
-        KHashLruCaches.h)
+        KHashLruCaches.h
+        KHashLruCaches_Test.h)
