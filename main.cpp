@@ -164,33 +164,72 @@
 //    return 0;
 //}
 
-#include <iostream>
-#include <unordered_map>
-#include "LFUCache.h"
+//#include <iostream>
+//#include <unordered_map>
+//#include "LFUCache.h"
+//
+//using namespace std;
+//
+//int main() {
+//    // 创建一个容量为 2 的 LFU 缓存
+//    LFUCahe cache(2);
+//
+//    // 测试 put 和 get 方法
+//    cache.put(1, 1); // 缓存存储键值对 (1, 1)
+//    cache.put(2, 2); // 缓存存储键值对 (2, 2)
+//
+//    cout << "Get key 1: " << cache.get(1) << endl; // 返回 1
+//
+//    cache.put(3, 3); // 淘汰键 2（访问频率最低），存储键值对 (3, 3)
+//
+//    cout << "Get key 2: " << cache.get(2) << endl; // 返回 -1（键 2 被淘汰）
+//    cout << "Get key 3: " << cache.get(3) << endl; // 返回 3
+//
+//    cache.put(4, 4); // 淘汰键 1（访问频率最低），存储键值对 (4, 4)
+//
+//    cout << "Get key 1: " << cache.get(1) << endl; // 返回 -1（键 1 被淘汰）
+//    cout << "Get key 3: " << cache.get(3) << endl; // 返回 3
+//    cout << "Get key 4: " << cache.get(4) << endl; // 返回 4
+//
+//    return 0;
+//}
 
-using namespace std;
+
+#include <iostream>
+#include "memory"
+#include <string>
+#include "mutex"
+#include "KHashLfuCache.h"
 
 int main() {
-    // 创建一个容量为 2 的 LFU 缓存
-    LFUCahe cache(2);
+    // 创建一个容量为3的LFU缓存
+    KLfuCache<std::string, int> cache(3);
 
-    // 测试 put 和 get 方法
-    cache.put(1, 1); // 缓存存储键值对 (1, 1)
-    cache.put(2, 2); // 缓存存储键值对 (2, 2)
+    // 测试缓存存储和访问
+    cache.put("A", 1);
+    cache.put("B", 2);
+    cache.put("C", 3);
 
-    cout << "Get key 1: " << cache.get(1) << endl; // 返回 1
+    std::cout << "Get A: " << cache.get("A") << std::endl; // 输出1，访问频率增加
+    std::cout << "Get B: " << cache.get("B") << std::endl; // 输出2，访问频率增加
 
-    cache.put(3, 3); // 淘汰键 2（访问频率最低），存储键值对 (3, 3)
+    cache.put("D", 4); // 淘汰频率最低的C，插入D
 
-    cout << "Get key 2: " << cache.get(2) << endl; // 返回 -1（键 2 被淘汰）
-    cout << "Get key 3: " << cache.get(3) << endl; // 返回 3
+    std::cout << "Get C: " << cache.get("C") << std::endl; // 输出-1，C已被淘汰
+    std::cout << "Get A: " << cache.get("A") << std::endl; // 输出1，A仍然存在
+    std::cout << "Get D: " << cache.get("D") << std::endl; // 输出4，D被插入
 
-    cache.put(4, 4); // 淘汰键 1（访问频率最低），存储键值对 (4, 4)
+    // 测试频率更新
+    cache.put("E", 5); // 淘汰频率最低的B，插入E
+    std::cout << "Get B: " << cache.get("B") << std::endl; // 输出-1，B已被淘汰
+    std::cout << "Get E: " << cache.get("E") << std::endl; // 输出5，E被插入
 
-    cout << "Get key 1: " << cache.get(1) << endl; // 返回 -1（键 1 被淘汰）
-    cout << "Get key 3: " << cache.get(3) << endl; // 返回 3
-    cout << "Get key 4: " << cache.get(4) << endl; // 返回 4
+    // 测试频率调整
+    cache.put("F", 6);
+    std::cout << "Get D: " << cache.get("D") << std::endl; // 输出4，D的频率更新
+    std::cout << "Get F: " << cache.get("F") << std::endl; // 输出6，F被插入
 
     return 0;
 }
+
 
