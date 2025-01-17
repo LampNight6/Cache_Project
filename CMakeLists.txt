@@ -11,4 +11,13 @@ add_executable(Cache_Project main.cpp
         KLruCache_Test.h
         KLruKCache_Test.h
         KHashLruCaches.h
-        KHashLruCaches_Test.h)
+        KHashLruCaches_Test.h
+        LFUCache.h
+        KLfuCache.h
+        KICachePolicy.h
+        KLfuCache_Test.h
+        KHashLfuCache.h
+        KArcCache/KArcCacheNode.h
+        KArcCache/KArcCache.h
+        KArcCache/KArcLruPart.h
+        KArcCache/KArcLfuPart.h)
