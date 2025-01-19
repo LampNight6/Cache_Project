@@ -195,41 +195,41 @@
 //}
 
 
-#include <iostream>
-#include "memory"
-#include <string>
-#include "mutex"
-#include "KHashLfuCache.h"
-
-int main() {
-    // 创建一个容量为3的LFU缓存
-    KLfuCache<std::string, int> cache(3);
-
-    // 测试缓存存储和访问
-    cache.put("A", 1);
-    cache.put("B", 2);
-    cache.put("C", 3);
-
-    std::cout << "Get A: " << cache.get("A") << std::endl; // 输出1，访问频率增加
-    std::cout << "Get B: " << cache.get("B") << std::endl; // 输出2，访问频率增加
-
-    cache.put("D", 4); // 淘汰频率最低的C，插入D
-
-    std::cout << "Get C: " << cache.get("C") << std::endl; // 输出-1，C已被淘汰
-    std::cout << "Get A: " << cache.get("A") << std::endl; // 输出1，A仍然存在
-    std::cout << "Get D: " << cache.get("D") << std::endl; // 输出4，D被插入
-
-    // 测试频率更新
-    cache.put("E", 5); // 淘汰频率最低的B，插入E
-    std::cout << "Get B: " << cache.get("B") << std::endl; // 输出-1，B已被淘汰
-    std::cout << "Get E: " << cache.get("E") << std::endl; // 输出5，E被插入
-
-    // 测试频率调整
-    cache.put("F", 6);
-    std::cout << "Get D: " << cache.get("D") << std::endl; // 输出4，D的频率更新
-    std::cout << "Get F: " << cache.get("F") << std::endl; // 输出6，F被插入
-
-    return 0;
-}
+//#include <iostream>
+//#include "memory"
+//#include <string>
+//#include "mutex"
+//#include "KHashLfuCache.h"
+//
+//int main() {
+//    // 创建一个容量为3的LFU缓存
+//    KLfuCache<std::string, int> cache(3);
+//
+//    // 测试缓存存储和访问
+//    cache.put("A", 1);
+//    cache.put("B", 2);
+//    cache.put("C", 3);
+//
+//    std::cout << "Get A: " << cache.get("A") << std::endl; // 输出1，访问频率增加
+//    std::cout << "Get B: " << cache.get("B") << std::endl; // 输出2，访问频率增加
+//
+//    cache.put("D", 4); // 淘汰频率最低的C，插入D
+//
+//    std::cout << "Get C: " << cache.get("C") << std::endl; // 输出-1，C已被淘汰
+//    std::cout << "Get A: " << cache.get("A") << std::endl; // 输出1，A仍然存在
+//    std::cout << "Get D: " << cache.get("D") << std::endl; // 输出4，D被插入
+//
+//    // 测试频率更新
+//    cache.put("E", 5); // 淘汰频率最低的B，插入E
+//    std::cout << "Get B: " << cache.get("B") << std::endl; // 输出-1，B已被淘汰
+//    std::cout << "Get E: " << cache.get("E") << std::endl; // 输出5，E被插入
+//
+//    // 测试频率调整
+//    cache.put("F", 6);
+//    std::cout << "Get D: " << cache.get("D") << std::endl; // 输出4，D的频率更新
+//    std::cout << "Get F: " << cache.get("F") << std::endl; // 输出6，F被插入
+//
+//    return 0;
+//}
 
 

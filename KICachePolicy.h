@@ -24,7 +24,7 @@ namespace Cache_Project
 
     };
 
-} // namespace KamaCache
+} // namespace Cache_Project
 
 
 #endif //CACHE_PROJECT_KICACHEPOLICY_H
