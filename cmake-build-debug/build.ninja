@@ -49,18 +49,6 @@ cmake_ninja_workdir = D$:/CodeProject/Clionproject/Cache_Project/cmake-build-deb
 
 build cmake_object_order_depends_target_Cache_Project: phony || CMakeFiles/Cache_Project.dir
 
-build CMakeFiles/Cache_Project.dir/main.cpp.obj: CXX_COMPILER__Cache_Project_unscanned_Debug D$:/CodeProject/Clionproject/Cache_Project/main.cpp || cmake_object_order_depends_target_Cache_Project
-  DEP_FILE = CMakeFiles\Cache_Project.dir\main.cpp.obj.d
-  FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
-  OBJECT_DIR = CMakeFiles\Cache_Project.dir
-  OBJECT_FILE_DIR = CMakeFiles\Cache_Project.dir
-
-build CMakeFiles/Cache_Project.dir/LRUCache.cpp.obj: CXX_COMPILER__Cache_Project_unscanned_Debug D$:/CodeProject/Clionproject/Cache_Project/LRUCache.cpp || cmake_object_order_depends_target_Cache_Project
-  DEP_FILE = CMakeFiles\Cache_Project.dir\LRUCache.cpp.obj.d
-  FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
-  OBJECT_DIR = CMakeFiles\Cache_Project.dir
-  OBJECT_FILE_DIR = CMakeFiles\Cache_Project.dir
-
 build CMakeFiles/Cache_Project.dir/testAllCachePolicy.cpp.obj: CXX_COMPILER__Cache_Project_unscanned_Debug D$:/CodeProject/Clionproject/Cache_Project/testAllCachePolicy.cpp || cmake_object_order_depends_target_Cache_Project
   DEP_FILE = CMakeFiles\Cache_Project.dir\testAllCachePolicy.cpp.obj.d
   FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
@@ -75,7 +63,7 @@ build CMakeFiles/Cache_Project.dir/testAllCachePolicy.cpp.obj: CXX_COMPILER__Cac
 #############################################
 # Link the executable Cache_Project.exe
 
-build Cache_Project.exe: CXX_EXECUTABLE_LINKER__Cache_Project_Debug CMakeFiles/Cache_Project.dir/main.cpp.obj CMakeFiles/Cache_Project.dir/LRUCache.cpp.obj CMakeFiles/Cache_Project.dir/testAllCachePolicy.cpp.obj
+build Cache_Project.exe: CXX_EXECUTABLE_LINKER__Cache_Project_Debug CMakeFiles/Cache_Project.dir/testAllCachePolicy.cpp.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\Cache_Project.dir

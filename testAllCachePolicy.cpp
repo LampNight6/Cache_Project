@@ -6,7 +6,6 @@
 #include <random>
 #include <algorithm>
 
-#include "KICachePolicy.h"
 #include "KLfuCache.h"
 #include "KLruCache.h"
 #include "KArcCache/KArcCache.h"
@@ -24,21 +23,21 @@ private:
     std::chrono::time_point<std::chrono::high_resolution_clock> start_;
 };
 
-// è¾…åŠ©å‡½æ•°ï¼šæ‰“å°ç»“æœ
+// ¸¨Öúº¯Êı£º´òÓ¡½á¹û
 void printResults(const std::string& testName, int capacity,
                   const std::vector<int>& get_operations,
                   const std::vector<int>& hits) {
-    std::cout << "ç¼“å­˜å¤§å°: " << capacity << std::endl;
-    std::cout << "LRU - å‘½ä¸­ç‡: " << std::fixed << std::setprecision(2)
+    std::cout << "»º´æ´óĞ¡: " << capacity << std::endl;
+    std::cout << "LRU - ÃüÖĞÂÊ: " << std::fixed << std::setprecision(2)
               << (100.0 * hits[0] / get_operations[0]) << "%" << std::endl;
-    std::cout << "LFU - å‘½ä¸­ç‡: " << std::fixed << std::setprecision(2)
+    std::cout << "LFU - ÃüÖĞÂÊ: " << std::fixed << std::setprecision(2)
               << (100.0 * hits[1] / get_operations[1]) << "%" << std::endl;
-    std::cout << "ARC - å‘½ä¸­ç‡: " << std::fixed << std::setprecision(2)
+    std::cout << "ARC - ÃüÖĞÂÊ: " << std::fixed << std::setprecision(2)
               << (100.0 * hits[2] / get_operations[2]) << "%" << std::endl;
 }
 
 void testHotDataAccess() {
-    std::cout << "\n=== æµ‹è¯•åœºæ™¯1ï¼šçƒ­ç‚¹æ•°æ®è®¿é—®æµ‹è¯• ===" << std::endl;
+    std::cout << "\n=== ²âÊÔ³¡¾°1£ºÈÈµãÊı¾İ·ÃÎÊ²âÊÔ ===" << std::endl;
 
     const int CAPACITY = 5;
     const int OPERATIONS = 100000;
@@ -56,25 +55,25 @@ void testHotDataAccess() {
     std::vector<int> hits(3, 0);
     std::vector<int> get_operations(3, 0);
 
-    // å…ˆè¿›è¡Œä¸€ç³»åˆ—putæ“ä½œ
+    // ÏÈ½øĞĞÒ»ÏµÁĞput²Ù×÷
     for (int i = 0; i < caches.size(); ++i) {
         for (int op = 0; op < OPERATIONS; ++op) {
             int key;
-            if (op % 100 < 40) {  // 40%çƒ­ç‚¹æ•°æ®
+            if (op % 100 < 40) {  // 40%ÈÈµãÊı¾İ
                 key = gen() % HOT_KEYS;
-            } else {  // 60%å†·æ•°æ®
+            } else {  // 60%ÀäÊı¾İ
                 key = HOT_KEYS + (gen() % COLD_KEYS);
             }
             std::string value = "value" + std::to_string(key);
             caches[i]->put(key, value);
         }
 
-        // ç„¶åè¿›è¡Œéšæœºgetæ“ä½œ
+        // È»ºó½øĞĞËæ»úget²Ù×÷
         for (int get_op = 0; get_op < OPERATIONS/2; ++get_op) {
             int key;
-            if (get_op % 100 < 40) {  // 40%æ¦‚ç‡è®¿é—®çƒ­ç‚¹
+            if (get_op % 100 < 40) {  // 40%¸ÅÂÊ·ÃÎÊÈÈµã
                 key = gen() % HOT_KEYS;
-            } else {  // 60%æ¦‚ç‡è®¿é—®å†·æ•°æ®
+            } else {  // 60%¸ÅÂÊ·ÃÎÊÀäÊı¾İ
                 key = HOT_KEYS + (gen() % COLD_KEYS);
             }
 
@@ -86,11 +85,11 @@ void testHotDataAccess() {
         }
     }
 
-    printResults("çƒ­ç‚¹æ•°æ®è®¿é—®æµ‹è¯•", CAPACITY, get_operations, hits);
+    printResults("ÈÈµãÊı¾İ·ÃÎÊ²âÊÔ", CAPACITY, get_operations, hits);
 }
 
 void testLoopPattern() {
-    std::cout << "\n=== æµ‹è¯•åœºæ™¯2ï¼šå¾ªç¯æ‰«ææµ‹è¯• ===" << std::endl;
+    std::cout << "\n=== ²âÊÔ³¡¾°2£ºÑ­»·É¨Ãè²âÊÔ ===" << std::endl;
 
     const int CAPACITY = 3;
     const int LOOP_SIZE = 200;
@@ -107,23 +106,23 @@ void testLoopPattern() {
     std::random_device rd;
     std::mt19937 gen(rd());
 
-    // å…ˆå¡«å……æ•°æ®
+    // ÏÈÌî³äÊı¾İ
     for (int i = 0; i < caches.size(); ++i) {
         for (int key = 0; key < LOOP_SIZE * 2; ++key) {
             std::string value = "loop" + std::to_string(key);
             caches[i]->put(key, value);
         }
 
-        // ç„¶åè¿›è¡Œè®¿é—®æµ‹è¯•
+        // È»ºó½øĞĞ·ÃÎÊ²âÊÔ
         int current_pos = 0;
         for (int op = 0; op < OPERATIONS; ++op) {
             int key;
-            if (op % 100 < 70) {  // 70%é¡ºåºæ‰«æ
+            if (op % 100 < 70) {  // 70%Ë³ĞòÉ¨Ãè
                 key = current_pos;
                 current_pos = (current_pos + 1) % LOOP_SIZE;
-            } else if (op % 100 < 85) {  // 15%éšæœºè·³è·ƒ
+            } else if (op % 100 < 85) {  // 15%Ëæ»úÌøÔ¾
                 key = gen() % LOOP_SIZE;
-            } else {  // 15%è®¿é—®èŒƒå›´å¤–æ•°æ®
+            } else {  // 15%·ÃÎÊ·¶Î§ÍâÊı¾İ
                 key = LOOP_SIZE + (gen() % LOOP_SIZE);
             }
 
@@ -135,11 +134,11 @@ void testLoopPattern() {
         }
     }
 
-    printResults("å¾ªç¯æ‰«ææµ‹è¯•", CAPACITY, get_operations, hits);
+    printResults("Ñ­»·É¨Ãè²âÊÔ", CAPACITY, get_operations, hits);
 }
 
 void testWorkloadShift() {
-    std::cout << "\n=== æµ‹è¯•åœºæ™¯3ï¼šå·¥ä½œè´Ÿè½½å‰§çƒˆå˜åŒ–æµ‹è¯• ===" << std::endl;
+    std::cout << "\n=== ²âÊÔ³¡¾°3£º¹¤×÷¸ºÔØ¾çÁÒ±ä»¯²âÊÔ ===" << std::endl;
 
     const int CAPACITY = 4;
     const int OPERATIONS = 80000;
@@ -155,27 +154,27 @@ void testWorkloadShift() {
     std::vector<int> hits(3, 0);
     std::vector<int> get_operations(3, 0);
 
-    // å…ˆå¡«å……ä¸€äº›åˆå§‹æ•°æ®
+    // ÏÈÌî³äÒ»Ğ©³õÊ¼Êı¾İ
     for (int i = 0; i < caches.size(); ++i) {
         for (int key = 0; key < 1000; ++key) {
             std::string value = "init" + std::to_string(key);
             caches[i]->put(key, value);
         }
 
-        // ç„¶åè¿›è¡Œå¤šé˜¶æ®µæµ‹è¯•
+        // È»ºó½øĞĞ¶à½×¶Î²âÊÔ
         for (int op = 0; op < OPERATIONS; ++op) {
             int key;
-            // æ ¹æ®ä¸åŒé˜¶æ®µé€‰æ‹©ä¸åŒçš„è®¿é—®æ¨¡å¼
-            if (op < PHASE_LENGTH) {  // çƒ­ç‚¹è®¿é—®
+            // ¸ù¾İ²»Í¬½×¶ÎÑ¡Ôñ²»Í¬µÄ·ÃÎÊÄ£Ê½
+            if (op < PHASE_LENGTH) {  // ÈÈµã·ÃÎÊ
                 key = gen() % 5;
-            } else if (op < PHASE_LENGTH * 2) {  // å¤§èŒƒå›´éšæœº
+            } else if (op < PHASE_LENGTH * 2) {  // ´ó·¶Î§Ëæ»ú
                 key = gen() % 1000;
-            } else if (op < PHASE_LENGTH * 3) {  // é¡ºåºæ‰«æ
+            } else if (op < PHASE_LENGTH * 3) {  // Ë³ĞòÉ¨Ãè
                 key = (op - PHASE_LENGTH * 2) % 100;
-            } else if (op < PHASE_LENGTH * 4) {  // å±€éƒ¨æ€§éšæœº
+            } else if (op < PHASE_LENGTH * 4) {  // ¾Ö²¿ĞÔËæ»ú
                 int locality = (op / 1000) % 10;
                 key = locality * 20 + (gen() % 20);
-            } else {  // æ··åˆè®¿é—®
+            } else {  // »ìºÏ·ÃÎÊ
                 int r = gen() % 100;
                 if (r < 30) {
                     key = gen() % 5;
@@ -192,15 +191,15 @@ void testWorkloadShift() {
                 hits[i]++;
             }
 
-            // éšæœºè¿›è¡Œputæ“ä½œï¼Œæ›´æ–°ç¼“å­˜å†…å®¹
-            if (gen() % 100 < 30) {  // 30%æ¦‚ç‡è¿›è¡Œput
+            // Ëæ»ú½øĞĞput²Ù×÷£¬¸üĞÂ»º´æÄÚÈİ
+            if (gen() % 100 < 30) {  // 30%¸ÅÂÊ½øĞĞput
                 std::string value = "new" + std::to_string(key);
                 caches[i]->put(key, value);
             }
         }
     }
 
-    printResults("å·¥ä½œè´Ÿè½½å‰§çƒˆå˜åŒ–æµ‹è¯•", CAPACITY, get_operations, hits);
+    printResults("¹¤×÷¸ºÔØ¾çÁÒ±ä»¯²âÊÔ", CAPACITY, get_operations, hits);
 }
 
 

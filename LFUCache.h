@@ -1,7 +1,7 @@
 #ifndef CACHE_PROJECT_LFUCACHE_H
 #define CACHE_PROJECT_LFUCACHE_H
 
-
+//基础LFU代码
 class LFUCahe{
 private:
     struct Node{
@@ -17,7 +17,7 @@ private:
             next = NULL;
         }
     };
-    struct FreqList{
+    struct FreqList{    //使用双向链表便于维护
         int freq;
         Node* L,* R;
         FreqList(int freq){
@@ -33,13 +33,13 @@ private:
     std::unordered_map<int, Node*> hashNode;
     std::unordered_map<int,FreqList*> hashFreq;
 
-    void deleteFromList(Node* node){
+    void deleteFromList(Node* node){    //删除节点
         Node* pre = node->pre;
         Node* next = node->next;
         pre->next = next;
         next->pre = pre;
     }
-    void append(Node* node){
+    void append(Node* node){    //添加节点
         int freq = node->freq;
         if(hashFreq.find(freq) == hashFreq.end())
             hashFreq[freq] = new FreqList(freq);
@@ -57,7 +57,7 @@ public:
         n = capacity;
         minFreq = 0;
     }
-    int get(int key){
+    int get(int key){   //查询
         if(hashNode.find(key) != hashNode.end()){
             Node* node = hashNode[key];
             deleteFromList(node);
@@ -70,7 +70,7 @@ public:
             return -1;
         }
     }
-    void put(int key, int value){
+    void put(int key, int value){   //插入
         if(n ==0)
             return;
         if(get(key) != -1)

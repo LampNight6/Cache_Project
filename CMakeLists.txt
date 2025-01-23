@@ -2,23 +2,17 @@ cmake_minimum_required(VERSION 3.26)
 project(Cache_Project)
 
 set(CMAKE_CXX_STANDARD 17)
-
-add_executable(Cache_Project main.cpp
-        LRUCache.h
-        LRUCache.cpp
+add_executable(Cache_Project
         KLruCache.h
         KLruKCache.h
-        KLruCache_Test.h
-        KLruKCache_Test.h
         KHashLruCaches.h
-        KHashLruCaches_Test.h
         LFUCache.h
         KLfuCache.h
         KICachePolicy.h
-        KLfuCache_Test.h
         KHashLfuCache.h
         KArcCache/KArcCacheNode.h
         KArcCache/KArcCache.h
         KArcCache/KArcLruPart.h
         KArcCache/KArcLfuPart.h
-        testAllCachePolicy.cpp)
+        testAllCachePolicy.cpp
+        LRUCache.h)

@@ -33,9 +33,9 @@ namespace Cache_Project
                     : freq(1), key(key), value(value), pre(nullptr), next(nullptr) {}
         };
 
-        using NodePtr = std::shared_ptr<Node>;
+        using NodePtr = std::shared_ptr<Node>;  //使用共享指针，自动内存管理
         int freq_; // 访问频率
-        NodePtr head_; // 假头结点
+        NodePtr head_; // 假头结点，简化边界条件处理
         NodePtr tail_; // 假尾结点
 
     public:
@@ -53,7 +53,7 @@ namespace Cache_Project
             return head_->next == tail_;
         }
 
-        // 提那家结点管理方法
+        // 添加结点
         void addNode(NodePtr node)
         {
             if (!node || !head_ || !tail_)
@@ -65,6 +65,7 @@ namespace Cache_Project
             tail_->pre = node;
         }
 
+        //删除节点
         void removeNode(NodePtr node)
         {
             if (!node || !head_ || !tail_)
@@ -80,8 +81,8 @@ namespace Cache_Project
 
         NodePtr getFirstNode() const { return head_->next; }
 
-        friend class KLfuCache<Key, Value>;
-        //friend class KArcCache<Key, Value>;
+        friend class KLfuCache<Key, Value>;     //友元类，便于直接访问成员
+
     };
 
     template <typename Key, typename Value>
