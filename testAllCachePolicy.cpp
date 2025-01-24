@@ -9,6 +9,7 @@
 #include "KLfuCache.h"
 #include "KLruCache.h"
 #include "KArcCache/KArcCache.h"
+#include "LFUCahe.h"
 
 class Timer {
 public:
@@ -201,6 +202,48 @@ void testWorkloadShift() {
 
     printResults("工作负载剧烈变化测试", CAPACITY, get_operations, hits);
 }
+void testLFUCache() {
+    // 创建一个容量为 20 的三级缓存
+    LFUCahe cache(20);
+
+    // 向缓存中插入键值对
+    cache.put(1, 1);
+    cache.put(2, 2);
+    cache.put(3, 3);
+    cache.put(4, 4);
+    cache.put(5, 5);
+
+    // 访问一些缓存项
+    std::cout << "Get key 1: " << cache.get(1) << std::endl; // Should be hit in L1
+    std::cout << "Get key 2: " << cache.get(2) << std::endl; // Should be hit in L1
+    std::cout << "Get key 3: " << cache.get(3) << std::endl; // Should be hit in L1
+    std::cout << "Get key 6 (not in cache): " << cache.get(6) << std::endl; // Should be missed
+
+    // 插入更多元素，可能会导致缓存淘汰
+    for (int i = 6; i <= 20; ++i) {
+        cache.put(i, i);
+    }
+
+    // 访问一些缓存项，看看哪些缓存项仍然存在
+    std::cout << "Get key 1: " << cache.get(1) << std::endl; // Should be found in L1
+    std::cout << "Get key 5: " << cache.get(5) << std::endl; // Should be found in L1 or L2
+    std::cout << "Get key 10: " << cache.get(10) << std::endl; // Should be found in L2 or L3
+    std::cout << "Get key 15: " << cache.get(15) << std::endl; // Should be found in L2 or L3
+    std::cout << "Get key 20: " << cache.get(20) << std::endl; // Should be found in L2 or L3
+
+    // 插入更多元素，可能会导致缓存淘汰
+    cache.put(21, 21);
+    cache.put(22, 22);
+    cache.put(23, 23);
+    cache.put(24, 24);
+    cache.put(25, 25);
+
+    // 访问一些缓存项，看看哪些缓存项仍然存在
+    for(int i = 1; i < 26; i++){
+        std::cout << "Get key  " <<i<<" : "<< cache.get(i) << std::endl; // Might be evicted
+    }
+
+}
 
 
 
@@ -208,5 +251,7 @@ int main() {
     testHotDataAccess();
     testLoopPattern();
     testWorkloadShift();
+    std::cout<<std::endl;std::cout<<std::endl;std::cout<<std::endl;
+    testLFUCache();
     return 0;
 }

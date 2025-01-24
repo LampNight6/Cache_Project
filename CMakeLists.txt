@@ -15,4 +15,6 @@ add_executable(Cache_Project
         KArcCache/KArcLruPart.h
         KArcCache/KArcLfuPart.h
         testAllCachePolicy.cpp
-        LRUCache.h)
+        LRUCache.h
+        LFUCahe.h
+)
